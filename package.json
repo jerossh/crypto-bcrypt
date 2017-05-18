@@ -1,0 +1,26 @@
+{
+  "name": "crypto-bcrypt",
+  "version": "0.0.1",
+  "description": "基于 crypto 模块开发的用户注册登录插件",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerossh/crypto-bcrypt.git"
+  },
+  "keywords": [
+    "crypto",
+    "bcrypt"
+  ],
+  "author": "jon <jerosshen@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jerossh/crypto-bcrypt/issues"
+  },
+  "homepage": "https://github.com/jerossh/crypto-bcrypt#readme",
+  "devDependencies": {
+    "ava": "^0.19.1"
+  }
+}
