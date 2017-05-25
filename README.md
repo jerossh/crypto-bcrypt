@@ -37,8 +37,10 @@ compare(hash, user1.psw).then( bool => {
 
 ## param
 
-#### genPaswd(pasw, salt, iterations, keylen, digest)
-#### compare(hashedPsw, pasw, salt, iterations, keylen digest)
+genPaswd(pasw, salt, iterations, keylen, digest)
+
+compare(hashedPsw, pasw, salt, iterations, keylen digest)
+
 ```js
 // default
 genPaswd(user1.pasw, 'a password', 1000, 69, 'sha512')

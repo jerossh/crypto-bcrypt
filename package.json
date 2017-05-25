@@ -1,7 +1,7 @@
 {
   "name": "crypto-bcrypt",
-  "version": "0.0.1",
-  "description": "基于 crypto 模块开发的用户注册登录插件",
+  "version": "1.0.0",
+  "description": "注册密码加密，登录密码比对 / hash the password  for sign in && hash password for sign up",
   "main": "index.js",
   "scripts": {
     "test": "ava"
