@@ -1,33 +1,32 @@
 const salt_d = 'a password';
 const iterations_d = 100;
-const keyLength_d = 70;
+const keylen_d = 70;
 const digest_d = 'sha512';
 const crypto = require('crypto');
 
 var isSupportES6= process.version.split('.')[0][1] > 4;
-if (isSupportES6) {console.error('May not suport you node, please upgarde you node version')};
+if (!isSupportES6) {console.error('May not suport you node, please upgarde you node version')};
 
-function getPaswd (pasw, salt=salt_d, iterations=iterations_d, keyLength=keyLength_d, digest=digest_d) {
-  return new Promise((resolve, reject) => {
-    crypto.pbkdf2(pasw, salt, iterations, keyLength, digest, function(err, key) {
-      if (err) reject(new Error('Fail to hash the password'));
-      resolve(key);
-    })
-  })
-}
 
-function compare(pasw, hasedKey){
+function genPaswd(pasw, salt=salt_d, iterations=iterations_d, keylen=keylen_d, digest=digest_d) {
   return new Promise((resolve, reject) => {
-    crypto.pbkdf2(pasw, salt, iterations, keyLength, digest, function(err, key) {
-      if (err) reject(new Error('Fail to compare the password'));
-      resolve(key == hasedKey);
-    })
+      // crypto.pbkdf2('pasw', 'salt', 100000, 512, 'sha512', (err, key) => {
+      crypto.pbkdf2(pasw, salt, iterations, keylen, digest, (err, key) => {
+        if (err) reject(new Error(err))
+        // console.log(key.toString('hex'))
+        resolve(key.toString('hex'))
+      });
   })
 }
 
 
-
-
+function compare(hashedPsw, pasw, salt=salt_d, iterations=iterations_d, keylen=keylen_d, digest=digest_d) {
+  return new Promise((resolve, reject) => {
+    genPaswd(pasw, salt, iterations, keylen, digest).then(key => {
+      resolve(key.toString('hex') == hashedPsw)
+    }).catch(err => reject(new Error(err)));
+  })
+}
 
 
 /**
@@ -58,40 +57,6 @@ function compare(pasw, hasedKey){
 
 
 module.exports = {
-    getPaswd,
+    genPaswd,
     compare
 }
-
-
-
-// function getPaswd (pasw, cb) {
-//   const cipher = crypto.createCipher('aes192', pasw);
-//   let encrypted = cipher.update(salt, 'utf8', 'hex');
-//   encrypted += cipher.final('hex');
-//   cb(encrypted)
-// }
-
-
-// function compare (pasw, hash , cb) {
-//   const decipher = crypto.createDecipher('aes192', pasw);
-//   const encrypted = hash;
-//   let isMatch = false
-//   let err = null
-//   try {
-//     let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-//     decrypted += decipher.final('utf8');
-
-//     if (decrypted === salt) {
-//       isMatch = true
-//     } else {
-//       isMatch = false
-//     }
-
-//   } catch (e) {
-//     console.log(e);
-//     isMatch = false
-//     err = new Error(e);
-//   }
-
-//   cb(err, isMatch)
-// }
