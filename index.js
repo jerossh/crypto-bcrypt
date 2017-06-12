@@ -12,6 +12,9 @@ function genPaswd(pasw, salt=salt_d, iterations=iterations_d, keylen=keylen_d, d
   return new Promise((resolve, reject) => {
       // crypto.pbkdf2('pasw', 'salt', 100000, 512, 'sha512', (err, key) => {
       crypto.pbkdf2(pasw, salt, iterations, keylen, digest, (err, key) => {
+        if (typeof pasw !== 'string') {
+          reject(new TypeError('Expect text format'));
+        }
         if (err) reject(new Error(err))
         // console.log(key.toString('hex'))
         resolve(key.toString('hex'))
@@ -21,7 +24,11 @@ function genPaswd(pasw, salt=salt_d, iterations=iterations_d, keylen=keylen_d, d
 
 
 function compare(hashedPsw, pasw, salt=salt_d, iterations=iterations_d, keylen=keylen_d, digest=digest_d) {
+
   return new Promise((resolve, reject) => {
+    if (typeof hashedPsw !== 'string' || typeof pasw !== 'string') {
+      reject(new TypeError('Expect text format'))
+    }
     genPaswd(pasw, salt, iterations, keylen, digest).then(key => {
       resolve(key.toString('hex') == hashedPsw)
     }).catch(err => reject(new Error(err)));

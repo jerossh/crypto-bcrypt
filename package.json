@@ -1,6 +1,6 @@
 {
   "name": "crypto-bcrypt",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "注册密码加密，登录密码比对 / hash the password  for sign in && hash password for sign up",
   "main": "index.js",
   "scripts": {
